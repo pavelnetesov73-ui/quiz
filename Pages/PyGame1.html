@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информатика 9 класс: Введение в PyGame</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2980b9;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        code, pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            display: block;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+        .task {
+            border-left: 5px solid #e74c3c;
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+        .note-task {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .note-task h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Урок №1: Библиотека PyGame</h1>
+    <p>9 класс | Среда разработки: Thonny</p>
+</header>
+
+<div class="section">
+    <h2>1. Основы библиотеки</h2>
+    <p><strong>PyGame</strong> — это набор инструментов для создания игр на языке Python. В основе любой игры лежит <strong>Игровой цикл (Game Loop)</strong>.</p>
+    
+    <div class="note-task">
+        <h4>📝 Задание в тетрадь №1:</h4>
+        <p>Запишите определение: <strong>Игровой цикл</strong> — это бесконечный цикл, который отвечает за обработку нажатий клавиш, расчет движения объектов и отрисовку картинки на экране.</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>2. Настройка Thonny</h2>
+    <p>Чтобы библиотека работала, её нужно установить в Thonny:</p>
+    <ol>
+        <li>Откройте меню <strong>Инструменты (Tools)</strong> -> <strong>Управление пакетами (Manage packages)</strong>.</li>
+        <li>В строке поиска введите <code>pygame</code>.</li>
+        <li>Нажмите кнопку <strong>Install</strong> и дождитесь окончания загрузки.</li>
+    </ol>
+</div>
+
+<div class="section">
+    <h2>3. Базовый шаблон программы</h2>
+    <p>Скопируйте этот код в Thonny и запустите его (клавиша F5). Это основа вашей будущей игры.</p>
+    <pre>
+import pygame
+
+# 1. Инициализация
+pygame.init()
+
+# 2. Настройка экрана
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Моя первая игра")
+
+# 3. Цвета (RGB)
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+
+# 4. Позиция игрока
+player_pos = [400, 300]
+clock = pygame.time.Clock()
+
+running = True
+while running:
+    # А) Обработка событий (выход)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Б) Логика (движение)
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:  player_pos[0] -= 5
+    if keys[pygame.K_RIGHT]: player_pos[0] += 5
+    if keys[pygame.K_UP]:    player_pos[1] -= 5
+    if keys[pygame.K_DOWN]:  player_pos[1] += 5
+
+    # В) Отрисовка
+    screen.fill(WHITE) 
+    pygame.draw.rect(screen, BLUE, (player_pos[0], player_pos[1], 50, 50))
+    
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()</pre>
+
+    <div class="note-task">
+        <h4>📝 Задание в тетрадь №2:</h4>
+        <p>Выпишите названия основных этапов игрового цикла из кода (пункты А, Б, В).</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>4. Практические задания (Работа на ПК)</h2>
+    
+    <div class="task">
+        <h3>Задание №1: "Цвета"</h3>
+        <p>Найдите в коде раздел <code># 3. Цвета</code>. Добавьте новый цвет <code>GREEN = (0, 255, 0)</code> и замените цвет фона <code>screen.fill(WHITE)</code> на ваш новый цвет.</p>
+    </div>
+
+    <div class="task">
+        <h3>Задание №2: "Границы"</h3>
+        <p>Сделайте так, чтобы квадрат не уходил за левый край экрана. В раздел <strong>Б) Логика</strong> добавьте код:</p>
+        <code>if player_pos[0] < 0: player_pos[0] = 0</code>
+        <p>Самостоятельно напишите условие для правого края (учитывая, что ширина экрана <code>WIDTH</code> равна 800).</p>
+    </div>
+
+    <div class="note-task">
+        <h4>📝 Задание в тетрадь №3:</h4>
+        <p>Запишите функцию для рисования прямоугольника: <code>pygame.draw.rect(экран, цвет, (x, y, ширина, высота))</code>. Подпишите, за что отвечает каждое число в скобках.</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>5. Рефлексия</h2>
+    <p>Если ваша программа запустилась и квадрат слушается клавиш — вы справились! Покажите результат учителю.</p>
+</div>
+
+</body>
+</html>
